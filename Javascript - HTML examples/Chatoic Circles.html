@@ -1,0 +1,46 @@
+
+<!-- saved from url=(0043)http://gedizspage.co.nf/ChatoicCircles.html -->
+<html><head><script src="https://d3js.org/d3.v3.js"></script></head>
+<body style="background: black;">
+<script>
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+document.body.style.background="black"
+
+mydata=[]; for (i=0;i<800;i++) {mydata[i]=Math.random()*800;}
+d3.select("body")
+.append("div")
+.append("svg").attr("width",800).attr("height",800)
+.selectAll("circle")
+.data(mydata).enter().append("circle")
+.attr("r",8)
+.attr("cx",function(d,i){return Math.random()*800;})
+.attr("cy",function(d,i){return Math.random()*800;})
+.style("fill",function(d,i){return getRandomColor();})
+.style("stroke",function(d,i){return getRandomColor();})
+	.transition()
+	.duration(3000)
+	.attr("cx",function(d,i){return Math.random()*800;})
+	.attr("cy",function(d,i){return Math.random()*800;})
+	.style("fill",function(d,i){return getRandomColor();})
+	.style("stroke",function(d,i){return getRandomColor();})
+
+s=setInterval(function(){
+	d3.selectAll("circle")
+	.transition()
+	.duration(3000)
+	.attr("cx",function(d,i){return Math.random()*800;})
+	.attr("cy",function(d,i){return Math.random()*800;})
+	.style("fill",function(d,i){return getRandomColor();})
+	.style("stroke",function(d,i){return getRandomColor();})
+	},3000);
+</script>
+
+</body></html>

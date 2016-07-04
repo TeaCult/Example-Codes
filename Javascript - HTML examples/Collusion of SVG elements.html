@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head><script src="https://d3js.org/d3.v3.js"></script></head>
+
+<body>
+<script>
+
+function ggGetRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i<6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+thiz=d3.select("body").append('div')[0][0];
+thiz.innerHTML="<h3>Try to pass red dot through purple one.<br>K&#305;rm&#305;z&#305; noktay&#305; mor olan&#305;n i&#231;inden ge&#231;ir.</h3>";
+
+
+var drag = d3.behavior.drag()  
+.on('dragstart', function() { 
+   d3.select(this).style('fill', 'black');
+  })
+.on('drag', function() {
+    var r1=parseInt(this.style.r);
+    var r2=parseInt(c3.style("r"));
+    var dx=d3.event.x-parseInt(c3.style("cx"));
+    var dy=d3.event.y-parseInt(c3.style("cy"));
+    var dist=Math.sqrt(dx*dx+dy*dy);
+        if ( dist>(r1+r2) ) {
+            d3.select(this)
+            .style("cx",d3.event.x)
+            .style("cy",d3.event.y);
+        }
+        else if(dx>0){
+           var alpha=Math.atan(dy/dx);
+           var nx=parseInt(c3.style("cx"))+(r1+r2)*Math.cos(alpha);
+           var ny=parseInt(c3.style("cy"))+(r1+r2)*Math.sin(alpha);
+           d3.select(this)
+           .style("cx",nx)
+           .style("cy",ny);
+        }
+         else if(dx<0){
+           var alpha=Math.atan(dy/dx);
+           var nx=parseInt(c3.style("cx"))-(r1+r2)*Math.cos(alpha);
+           var ny=parseInt(c3.style("cy"))-(r1+r2)*Math.sin(alpha);
+           d3.select(this)
+           .style("cx",nx)
+           .style("cy",ny);
+        }
+})
+.on('dragend', function() {
+    // d3.select(this).style('fill', 'white');
+    });
+
+s=d3.select(thiz).append("svg")
+.attr("width","200px")
+.attr("height","200px");
+
+s.append("circle")
+.style("cx",30)
+.style("cy",30)
+.style("r",30)
+.style("fill","blue")
+.style("opacity","0.1")
+.on("mouseover",function() {
+    d3.select("[id=small]")
+    .style("fill","yellow")
+})
+.on("dblclick",function() {
+    alert("doubleclicked");
+});
+
+c3=s.append("circle")
+.style("cx",90)
+.style("cy",90)
+.style("r",15)
+.style("fill","purple");
+
+s.attr("width","200px")
+.attr("height","200px")
+.append("circle")
+.style("cx",30)
+.style("cy",30)
+.style("r",15)
+.style("fill","red")
+.attr("id","small")
+.call(drag);
+
+//.on('drag',function() {
+//    d3.select(this)
+//    .style("cx",event.x)
+//    .style("cy",event.y);
+//    });
+//
+
+  </script>
+</body></html>
+

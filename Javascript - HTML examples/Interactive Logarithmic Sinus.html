@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head><script src="https://d3js.org/d3.v3.js"></script></head>
+
+<body>
+<script>
+
+function ggGetRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i<6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+thiz=d3.select("body").append('div')[0][0];
+thiz.innerHTML="<h3>Rahat Duramayan Etkile&#351;imli Logaritmik Sinüs </h3><br><h3>Non Resting Interactive Logarithmic Sinüs</h3><br>You can drag and click on circles ...";
+dat = [];
+for (i = 0; i < 40; i++) {
+	var x = Math.log(i) * 100 + 100;
+	var y = Math.sin(i*10/360*2*Math.PI)*100+150;
+    var color = ggGetRandomColor();
+		
+	dat[i] = {x,y,color};
+}
+
+c=d3.select(thiz).append("svg")
+.attr("width","1200px")
+.attr("height","400px")
+.selectAll("circle")
+.data(dat);
+
+
+
+function animStart() {
+
+var drag = d3.behavior.drag()  
+.on('dragstart', function() { 
+    d3.select(this).style('fill', 'red');
+  //  d3.select(this).transition();
+  })
+.on('drag', function(d) {
+    d3.select(this).transition();
+        d.x=d3.event.x;
+        d.y=d3.event.y;
+        animUpdate();
+    })
+// instead of dummy property 
+//function() { d3.select(this).property('dummy',function(d) {d.x=d3.event.x;})};
+.on('dragend', function() { d3.select(this).style('fill', 'black'); });
+
+
+
+
+c.enter().append("circle")
+.style("cx",20)
+.style("cy",20)
+.style("r",1)
+.style("fill",function(d) {return d.color;})
+.on("click",function() {
+    var t=d3.select(this);
+    
+    t.transition()
+    .duration(100)
+    .style("fill",ggGetRandomColor())
+    .style("r",3);
+    
+    t.transition()
+    .duration(100)
+    .delay(100)
+    .style("r",5);
+})
+.call(drag);
+
+
+c.transition().
+duration(200)
+.style("cx",function(d) {return d.x;})
+.style("cy",function(d) {return d.y;})
+.style("r",5);
+
+}
+
+
+
+var animUpdate=function animUpdate() {
+    c.data(dat)
+    .style("cx",function(d) {return d.x;})
+    .style("cy",function(d) {return d.y;});
+};
+
+var animRoutine =function animRoutine() {
+    c.transition()
+    .duration(200)
+    .style("cx",function(d) {return d.x+10*Math.random();})
+    .style("cy",function(d) {return d.y+10*Math.random();});
+    
+    c.transition()
+    .duration(200)
+    .delay(200)
+    .style("cx",function(d) {return d.x;})
+    .style("cy",function(d) {return d.y;});
+
+}
+
+s=setInterval(animRoutine,400)
+animStart();
+//s=setInterval(animUpdate,20);
+
+
+
+
+  </script>
+</body></html>
