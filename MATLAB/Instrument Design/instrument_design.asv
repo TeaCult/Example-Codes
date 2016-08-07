@@ -53,7 +53,6 @@ A5=resample(isamp,880,440);
 As5=resample(isamp,923,440);
 B5=resample(isamp,987,440);
 C6=resample(isamp,1046,440);
-S=C6.*0;
 
 l=length(A4);
 %chords;
