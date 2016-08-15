@@ -1,4 +1,7 @@
 function out = music(noteQue)
+%To Run function
+%%s=struct('note',{'F5';'G5';'C6';'G5';'D5';'S'},'beat',{'1/16';'1/8';'1/16';'1/16';'1/8';'1'});music(s);
+
 
 %% Buid instrument sound 
 imc=[1 4 1 2 10 5 1 1 7 6 1]; %instrument modal coefficients
